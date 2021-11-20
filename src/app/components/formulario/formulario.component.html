@@ -1,0 +1,62 @@
+<div class="text-center contenido">
+  <p>Employee</p>
+
+  <form [formGroup]="form">
+    <input type="text" class="form-control" placeholder="Name" [ngClass]="{'error-validation': sub && f['name'].errors, 'success-validation':name.valid && (name.dirty || name.touched) }" formControlName="name">
+    <input type="text" class="form-control" placeholder="Phone" [ngClass]="{'error-validation': sub && f['phone'].errors, 'success-validation':phone.valid && (phone.dirty || phone.touched) }" formControlName="phone">
+    <input type="email" class="form-control" placeholder="Email" [ngClass]="{'error-validation': sub && f['email'].errors, 'success-validation':email.valid && (email.dirty || email.touched) }" formControlName="email">
+    <input type="text" class="form-control" placeholder="Document" [ngClass]="{'error-validation': sub && f['document'].errors, 'success-validation':document.valid && (document.dirty || document.touched) }" formControlName="document">
+    <input type="number" class="form-control" placeholder="Salary" [ngClass]="{'error-validation': sub && f['salary'].errors, 'success-validation':salary.valid && (salary.dirty || salary.touched) }" formControlName="salary">
+
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" checked="false" value="m" formControlName="gender" type="radio">
+        <label class="form-check-label">Male</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" checked="true" value="f" formControlName="gender" type="radio">
+          <label class="form-check-label">Female</label>
+      </div>
+    </div>
+
+    <input type="date" data-date-format="DD MMMM YYYY" class="form-control" placeholder="Date Of Birth" [ngClass]="{'error-validation': sub && f['dateofbirth'].errors, 'success-validation':dateofbirth.valid && (dateofbirth.dirty || dateofbirth.touched) }" formControlName="dateofbirth">
+    <button class="btn btn-success" (click)="validacion()"> {{ config.config.formComponent.btnAccept }} </button>
+    <!--<input type="text" class="form-control" (keyup)="search($event)">-->
+    <input type="text" class="form-control" (keyup)="searchget($event)">
+  </form>
+  <!-- {{employees | json}} -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Document</th>
+        <th scope="col">Email</th>
+        <th scope="col">Salary</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Date Of Birth</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="employees && employees.length>0">
+      <tr *ngFor="let item of employees">
+        <th scope="row">{{item._id | slice: 0 : 10}}...</th>
+        <td>{{item.name}}</td>
+        <td>{{item.phone}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.document}}</td>
+        <td>{{item.salary}}</td>
+        <td>{{item.gender}}</td>
+        <td>{{item.dateofbirth}}</td>
+        <td><button class="btn btn-primary" (click)="edit(item)"> {{getConfigFc().config.formComponent.btnEdit}} </button></td>
+        <td><button class="btn btn-danger" (click)="delete(item._id)"> Eliminar </button></td>
+        <td><button class="btn" (click)="disEnable(item)" [ngClass]="{'btn-success': item.status == true ,
+          'btn-light': item.status == false }"> Activar </button></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  </div>
